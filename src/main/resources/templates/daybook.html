@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:text-overflow="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="static/styles/category-list.css" rel="stylesheet" type="text/css" >
+
+</head>
+<body style="background: whitesmoke">
+<!-- Хедер -->
+<block th:insert="blocks/header.html :: header"></block>
+<br>
+<div>
+
+    <div style="box-shadow: 0 56px 112px rgba(0,0,0,0.25), 0 40px 40px rgba(0,0,0,0.22); margin-left: 20%; margin-right: 20%; margin-top: 5%">
+        <div style="margin-bottom: 2%; margin-left: 1%">
+            <a th:href="@{/wod-add}"><button class="btn btn-success">Добавить тренировку</button></a><br>
+        </div>
+        <table class="table table-bordered table-hover table-striped linkedRow" style="background: lightyellow;">
+        <thead>
+        <tr style="background: white">
+            <th class="text-center">Дата тренировки</th>
+            <th class="text-center">#</th>
+            <th class="text-center">Просмотр тренировки</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="wod, count : ${wodListAttr}">
+            <td th:text="${wod.localDate}"></td>
+            <td th:text="${wod.getHashTag()}"></td>
+            <td style="width: 5%">
+                    <a th:href="@{'/wod/' + ${userIdAttr} + '/' + ${wod.id}}" style="margin-left: 45%">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                        </svg>
+                    </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+<br>
+</body>
+</html>

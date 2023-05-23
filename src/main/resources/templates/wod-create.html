@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:text-overflow="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Wod</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--
+     background-image: url("https://images.wallpaperscraft.ru/image/single/ganteli_fitnes_trenazhernyj_zal_113149_1366x768.jpg");
+     -->
+</head>
+<body>
+<!-- Хедер -->
+<block th:insert="blocks/header.html :: header"></block>
+
+<div class="container">
+
+    <br><br>
+    <div>
+        <form>
+            <input class="form-control" id="localDate" type="date" name="localDate" placeholder="дата тренировки">
+            <br><br>
+            <button style="width: 100%" id="add-exercise" class="btn btn-success btn-lg btn-block" type="button">Добавить задание</button>
+            <br>
+            <br>
+            <input class="form-control" type="text" id="hashTag" name="hashTag" placeholder="хэштег">
+            <br>
+            <textarea placeholder="Добавить комментарий" id="myComment" class="form-control" name="myComment"></textarea><br><br>
+            <input class="form-control summary" style="color: limegreen" type="button" onclick="sendRolesDate()" value="Сохранить тренировку">
+        </form>
+    </div>
+</div>
+<br>
+</body>
+<script>
+    function reloadAndRedirect(){
+        alert("Данные о тренировке успешно сохранены!");
+        window.location.reload();
+    }
+
+    function sendRolesDate(){
+        let localDate = document.getElementById('localDate');
+        let hashTag = document.getElementById('hashTag');
+        let myComment = document.getElementById('myComment');
+        let exercisesResult = [];
+        let exercises = document.getElementsByClassName("exercise");
+
+
+        for (let i=1; i <= exercises.length; i++) {
+            let map = new Object();
+            let description = document.getElementById('description-'+i);
+            let videoLink = document.getElementsByName('link-'+i);
+            let videosOfCurrentExercise = [];
+
+            for (let y=0; y < videoLink.length; y++){
+                videosOfCurrentExercise.push(videoLink[y].value);
+            }
+
+            map.description = description.value;
+            map.videoLinks = videosOfCurrentExercise;
+            exercisesResult.push(map);
+        }
+
+        let wodResult = new Object();
+        wodResult.localDate = localDate.value;
+        wodResult.hashTag = hashTag.value;
+        wodResult.myComment = myComment.value;
+        wodResult.exercises = exercisesResult;
+        console.log(wodResult);
+
+        let json = JSON.stringify(wodResult);
+        console.log(json);
+
+        $.ajax({
+            type: 'POST',
+            contentType: "application/json",
+            url: "/wod-save",
+            data: json,
+            dataType: "json",
+            success:  reloadAndRedirect()
+        });
+        window.location.replace("http://localhost:8050/daybook");
+
+    }
+</script>
+<script>
+    let n = 0; //счётчик заданий
+
+    //добавление задания
+    document.getElementById('add-exercise').onclick = function() {
+        n++;
+        let theDiv = document.createElement('div');
+        theDiv.innerHTML = '<div class="form-group exercise">'+
+            '<div class="input-group"><textarea minlength="1" rows="5" placeholder="Содержание задания" id="description-'+ n +'" class="form-control" name="description-'+ n +'"></textarea>'+
+            '<span class="input-group-btn"><button onclick="removeNewItem(this)" type="button" class="btn btn-warning">Удалить задание</button></span></div><br>' +
+            '<div><button type="button" class="btn btn-outline-dark" onclick="addVideoLink(this, n)">Добавить ссылку на видео</button></div><br><br><br></div>';
+        this.parentNode.insertBefore(theDiv, this.previousSibling);
+        getComputedStyle(theDiv).opacity;
+        theDiv.style.opacity = '1';
+    }
+
+    //удаление задания
+    function addVideoLink(currentElement, numberOfExercise) {
+        let m = 0; //счётчик ссылок на видео
+        m++;
+        let theVideoDiv = document.createElement('div');
+        theVideoDiv.innerHTML = '<br><div class="form-group">'+
+            '<div class="input-group"><input type="text" id="video-link-'+ m +'" class="form-control" name="link-' + numberOfExercise + '" placeholder="ссылка на видео на youtube">'+
+            '<span class="input-group-btn"><button onclick="removeNewItem(this)" type="button" class="btn btn-danger">Удалить видео</button></span></div>' +
+            '</div>';
+        currentElement.parentNode.insertBefore(theVideoDiv, currentElement.previousSibling);
+      //  getComputedStyle(theVideoDiv).opacity;
+       // theVideoDiv.style.opacity = '1';
+    }
+
+    //удаление задания
+    function removeNewItem(currentElement) {
+        let confirmRemoving = confirm("Удалить?");
+        if (confirmRemoving) {
+            currentElement.parentElement.parentElement.parentElement.parentElement.remove();
+        }
+        //n--;
+    }
+</script>
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</html>

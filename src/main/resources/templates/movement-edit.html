@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru-RU" style="height: auto; min-height: 100%;">
+<head>
+  <meta charset="UTF-8">
+  <title>Main page</title>
+</head>
+<body>
+<!-- Хедер -->
+
+<th:block th:insert="blocks/header.html :: header"></th:block>
+
+
+<br>
+<br>
+
+
+<div th:object="${movementAttr}">
+  <form method="post" th:action="@{'/movement-edit/' + ${movementAttr.getId()}}">
+    <br>
+    <h5>Название движения</h5>
+    <input type="text" th:value="*{movementName}" name="movementName"/>
+    <br>
+    <br>
+    <h5>1 ПМ</h5>
+    <input type="text" th:value="*{oneRepMaximum}" name="oneRepMaximum"/>
+    <br>
+    <br>
+    <h5>Коэффициент прибавки (волна 2)</h5>
+    <input type="text" th:value="*{incrementCoefficient2}" name="incrementCoefficient"/>
+    <br>
+    <h5>Коэффициент прибавки (волна 3)</h5>
+    <input type="text" th:value="*{incrementCoefficient3}" name="incrementCoefficient"/>
+    <br>
+    <h5>Коэффициент прибавки (волна 4)</h5>
+    <input type="text" th:value="*{incrementCoefficient4}" name="incrementCoefficient"/>
+    <br>
+    <br>
+    <input type="submit" value="Сохранить изменения">
+
+  </form>
+</div>
+
+</form>
+</body>
+
+</html>

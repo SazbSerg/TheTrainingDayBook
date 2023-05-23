@@ -1,0 +1,61 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru-RU" style="height: auto; min-height: 100%;">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add new movement</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<link href="static/css/main-page-cover.css" rel="stylesheet" type="text/css" >
+<body>
+<!-- Хедер -->
+
+<th:block th:insert="blocks/header.html :: header"></th:block>
+
+
+<br>
+<br>
+
+
+<div style="margin: 1%; border-style: groove; border-radius: 5px; background: whitesmoke; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+  <div style="margin-left: 2%; margin-top: 1%; margin-bottom: 2%">
+  <form method="post" th:action="@{/add-movement}">
+    <br>
+    <h5>Название движения</h5>
+    <input type="text" name="movementName" required/>
+    <br>
+    <br>
+    <h5>1 ПМ, кг</h5>
+    <input type="number" name="oneRepMaximum" required/>
+    <br>
+    <br>
+    <h5>Коэффициент прибавки, кг * повтор (волна 2)</h5>
+    <input type="number" name="incrementCoefficient2" required placeholder="0.5" title="
+    Коэффициент прибавки - прибавка к 1ПМ за выполнение повторения свыше значения волны.
+Например, если текущая волна - это волна 'по 10', и на тестовой неделе вы выполнили подход на 17 повторений,
+то к вашему расчётному 1ПМ прибавляется число, равное (17-10) * коэффициент прибавки."/>
+    <br>
+    <h5>Коэффициент прибавки, кг * повтор (волна 3)</h5>
+    <input type="number" name="incrementCoefficient3" required placeholder="0.5" title="
+    Коэффициент прибавки - прибавка к 1ПМ за выполнение повторения свыше значения волны.
+Например, если текущая волна - это волна 'по 8', и на тестовой неделе вы выполнили подход на 12 повторений,
+то к вашему расчётному 1ПМ прибавляется число, равное (12-8) * коэффициент прибавки."/>
+    <br>
+    <h5>Коэффициент прибавки, кг * повтор (волна 4)</h5>
+    <input type="number" name="incrementCoefficient4" required placeholder="0.5" title="
+    Коэффициент прибавки - прибавка к 1ПМ за выполнение повторения свыше значения волны.
+Например, если текущая волна - это волна 'по 5', и на тестовой неделе вы выполнили подход на 8 повторений,
+то к вашему расчётному 1ПМ прибавляется число, равное (8-5) * коэффициент прибавки."/>
+    <br>
+    <br>
+    <span><input type="submit" value="Добавить"></span>
+    <span><a href="movement"><input type="button" value="Отменить"></a></span>
+
+  </form>
+  </div>
+</div>
+
+</form>
+</body>
+</html>

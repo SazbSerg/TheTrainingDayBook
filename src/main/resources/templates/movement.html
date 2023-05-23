@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru-RU" style="height: auto; min-height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movement page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link href="static/css/main-page-cover.css" rel="stylesheet" type="text/css" >
+</head>
+<body>
+<!-- Хедер -->
+<th:block th:insert="blocks/header.html :: header"></th:block>
+<div style="margin: 1%; border-style: groove; border-radius: 5px; background: whitesmoke; box-shadow: 0 0 10px rgba(0,0,0,0.5);" th:object="${userAttr}">
+    <div style="margin-top: 1%; margin-left: 1%">
+        <a th:href="@{/add-movement}"><button class="btn btn-info btn-block" type="button">Добавить новое движение</button></a>
+    </div>
+    <h4 style="text-align: center; margin-top: 1%; margin-bottom: 2%">Ваш список тренируемых движений</h4>
+
+    <table class="table table-bordered table-hover table-striped linkedRow">
+        <thead>
+            <tr>
+                <th>Название движения</th>
+                <th>1ПМ</th>
+                <th>Коэффициент прибавки</th>
+                <th style="min-width: 80px">&nbsp;...</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="movement : ${userAttr.getMovements()}">
+            <td th:text="${movement.getMovementName()}" onclick="document.location = '/movement-cycle/' + this.id" th:id="${movement.getId()}"></td>
+            <td th:text="${movement.getOneRepMaximum()}" onclick="document.location = '/movement-cycle/' + this.id" th:id="${movement.getId()}"></td>
+            <td th:text="${movement.getIncrementCoefficient2()}" onclick="document.location = '/movement-cycle/' + this.id" th:id="${movement.getId()}"></td>
+            <td>
+                <div class="btn-group pull-right">
+                    <a class="btn btn-default btn-sm" th:href="@{'/movement-edit/'+${movement.getId()}}" title="Редактировать">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a class="btn btn-default btn-sm" onclick="submitRemovingMovement(this.id)" th:id="${movement.getId()}"  title="Удалить">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    //удаление движения
+    function submitRemovingMovement(id) {
+        let result = confirm('Вы уверены, что хотите удалить этот элемент?');
+        let row = document.getElementById(id).parentElement;
+        if (result) {
+            $.ajax({
+                type: 'POST',
+                contentType: "application/json",
+                url: "/movement-remove/" +id,
+                data: id,
+                dataType: "json",
+            });
+            row.hidden = true;
+        }
+    }
+</script>
+</html>

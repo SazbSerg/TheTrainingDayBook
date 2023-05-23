@@ -1,0 +1,30 @@
+
+<header th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <ul class="nav justify-content-end" style="background: black;">
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" style="margin-top: 2.5%"><span th:inline="text">Hello, [[${#authentication.getPrincipal().getUsername()}]]&nbsp</span></a>
+        </li>
+        <li class="nav-item active" >
+            <a class="nav-link " href="#"><form th:action="@{/logout}" method="post">
+                <button class="btn btn-secondary" type="submit">Logout</button>
+            </form></a>
+        </li>
+    </ul>
+    <ul class="nav nav-pills nav-fill" style="background: ivory; font-family: 'Bitstream Charter'; border: groove black;">
+        <li class="nav-item">
+            <a style="text-decoration: none; color: black" class="nav-link" th:href="@{/main}">Главная</a>
+        </li>
+        <li class="nav-item">
+            <a style="text-decoration: none; color: black" class="nav-link" th:href="@{/daybook}">Дневник тренировок</a>
+        </li>
+        <li class="nav-item">
+            <a style="text-decoration: none; color: black" class="nav-link" th:href="@{/movement}">Juggernaut method</a>
+        </li>
+        <li class="nav-item">
+            <a style="text-decoration: none; color: black" class="nav-link" th:href="@{/users}">Список пользователей</a>
+        </li>
+        <li class="nav-item">
+            <a style="text-decoration: none; color: black" class="nav-link" th:href="@{/profile}">Личный кабинет</a>
+        </li>
+    </ul>
+</header>
