@@ -101,28 +101,33 @@ public class MovementController {
     }
 
     @PostMapping("/movement-cycle-save-first-wave-result/{id}")
-    public String saveFirstWaveResultAndReturnMovementCyclePage(@PathVariable Long id, @RequestParam Integer firstWaveRepMaximum, @RequestParam Float incrementCoefficient2) {
+    public String saveFirstWaveResultAndReturnMovementCyclePage(@PathVariable Long id, @RequestParam Integer firstWaveRepMaximum) {
         Movement movement = movementRepo.findById(id).orElseThrow();
-        movement.setIncrementCoefficient2(incrementCoefficient2);
         movement.setFirstWaveRepMaximum(firstWaveRepMaximum);
         movementRepo.save(movement);
         return "redirect:/movement-cycle/" + id;
     }
 
     @PostMapping("/movement-cycle-save-second-wave-result/{id}")
-    public String saveSecondWaveResultAndReturnMovementCyclePage(@PathVariable Long id, @RequestParam Integer secondWaveRepMaximum, @RequestParam Float incrementCoefficient3) {
+    public String saveSecondWaveResultAndReturnMovementCyclePage(@PathVariable Long id, @RequestParam Integer secondWaveRepMaximum) {
         Movement movement = movementRepo.findById(id).orElseThrow();
-        movement.setIncrementCoefficient2(incrementCoefficient3);
         movement.setSecondWaveRepMaximum(secondWaveRepMaximum);
         movementRepo.save(movement);
         return "redirect:/movement-cycle/" + id;
     }
 
     @PostMapping("/movement-cycle-save-third-wave-result/{id}")
-    public String saveThirdWaveResultAndReturnMovementCyclePage(@PathVariable Long id, @RequestParam Integer thirdWaveRepMaximum, @RequestParam Float incrementCoefficient4) {
+    public String saveThirdWaveResultAndReturnMovementCyclePage(@PathVariable Long id, @RequestParam Integer thirdWaveRepMaximum) {
         Movement movement = movementRepo.findById(id).orElseThrow();
-        movement.setIncrementCoefficient2(incrementCoefficient4);
-        movement.setSecondWaveRepMaximum(thirdWaveRepMaximum);
+        movement.setThirdWaveRepMaximum(thirdWaveRepMaximum);
+        movementRepo.save(movement);
+        return "redirect:/movement-cycle/" + id;
+    }
+
+    @PostMapping("/movement-cycle-save-forth-wave-result/{id}")
+    public String saveForthWaveResultAndReturnMovementCyclePage(@PathVariable Long id, @RequestParam Integer forthWaveRepMaximum) {
+        Movement movement = movementRepo.findById(id).orElseThrow();
+        movement.setForthWaveRepMaximum(forthWaveRepMaximum);
         movementRepo.save(movement);
         return "redirect:/movement-cycle/" + id;
     }

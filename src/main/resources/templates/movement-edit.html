@@ -1,7 +1,14 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="ru-RU" style="height: auto; min-height: 100%;">
 <head>
   <meta charset="UTF-8">
-  <title>Main page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Movement edit</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  <link href="static/css/main-page-cover.css" rel="stylesheet" type="text/css" >
 </head>
 <body>
 <!-- Хедер -->
@@ -13,7 +20,7 @@
 <br>
 
 
-<div th:object="${movementAttr}">
+<div th:object="${movementAttr}" style="width: 100%; text-align: center">
   <form method="post" th:action="@{'/movement-edit/' + ${movementAttr.getId()}}">
     <br>
     <h5>Название движения</h5>
@@ -22,16 +29,6 @@
     <br>
     <h5>1 ПМ</h5>
     <input type="text" th:value="*{oneRepMaximum}" name="oneRepMaximum"/>
-    <br>
-    <br>
-    <h5>Коэффициент прибавки (волна 2)</h5>
-    <input type="text" th:value="*{incrementCoefficient2}" name="incrementCoefficient"/>
-    <br>
-    <h5>Коэффициент прибавки (волна 3)</h5>
-    <input type="text" th:value="*{incrementCoefficient3}" name="incrementCoefficient"/>
-    <br>
-    <h5>Коэффициент прибавки (волна 4)</h5>
-    <input type="text" th:value="*{incrementCoefficient4}" name="incrementCoefficient"/>
     <br>
     <br>
     <input type="submit" value="Сохранить изменения">

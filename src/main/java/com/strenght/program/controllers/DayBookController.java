@@ -54,6 +54,7 @@ public class DayBookController {
         ModelAndView modelAndView = new ModelAndView("wod-edit");
         //modelAndView.addObject("wodListAttr", userRepo.findUserByEmail(principal.getName()).getWoDList());
         model.addAttribute("wod", wodRepo.findById(idWod).get());
+        model.addAttribute("wodCont", wodRepo.findAll().size());
       //  modelAndView.addObject("userIdAttr", userRepo.findUserByEmail(principal.getName()).getId());
         return modelAndView;
     }
@@ -77,11 +78,19 @@ public class DayBookController {
 
     @GetMapping("/wod/{idUser}/{idWod}")
     public ModelAndView showWodPage(Principal principal, Model model, @PathVariable Long idWod, @PathVariable Long idUser){
-        ModelAndView modelAndView = new ModelAndView("wod-show");
+        ModelAndView modelAndViewMine = new ModelAndView("wod-show");
+        ModelAndView modelAndViewFriend = new ModelAndView("wod-show-friend");
         //modelAndView.addObject("wodListAttr", userRepo.findUserByEmail(principal.getName()).getWoDList());
         model.addAttribute("wod", wodRepo.findById(idWod).get());
-        modelAndView.addObject("userIdAttr", userRepo.findUserByEmail(principal.getName()).getId());
-        return modelAndView;
+        model.addAttribute("userNn", userRepo.findUserByEmail(principal.getName()).getNickName());
+        modelAndViewMine.addObject("userIdAttr", userRepo.findUserByEmail(principal.getName()).getId());
+        modelAndViewFriend.addObject("userIdAttr", userRepo.findUserByEmail(principal.getName()).getId());
+
+        if(idUser == userRepo.findUserByEmail(principal.getName()).getId().longValue()){
+            return modelAndViewMine;
+        } else {
+            return  modelAndViewFriend;
+        }
     }
 
     @RequestMapping(value="/wod-remove/{wodId}", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")

@@ -104,7 +104,7 @@
         theDiv.style.opacity = '1';
     }
 
-    //удаление задания
+    //добавить видео
     function addVideoLink(currentElement, numberOfExercise) {
         let m = 0; //счётчик ссылок на видео
         m++;
@@ -114,8 +114,6 @@
             '<span class="input-group-btn"><button onclick="removeNewItem(this)" type="button" class="btn btn-danger">Удалить видео</button></span></div>' +
             '</div>';
         currentElement.parentNode.insertBefore(theVideoDiv, currentElement.previousSibling);
-      //  getComputedStyle(theVideoDiv).opacity;
-       // theVideoDiv.style.opacity = '1';
     }
 
     //удаление задания

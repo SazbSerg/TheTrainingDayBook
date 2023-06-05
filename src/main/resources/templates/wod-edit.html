@@ -25,7 +25,25 @@
     <form>
       <input class="form-control" th:value="*{localDate}" id="localDate" type="date" name="localDate" placeholder="дата тренировки">
       <br><br>
-      <button style="width: 100%" id="add-exercise" class="btn btn-success btn-lg btn-block" type="button">Добавить задание</button>
+      <div th:each="exercise, count : ${wod.getExercises()}">
+
+        <div class="form-group exercise">
+          <div class="input-group"><textarea th:text="${exercise.getDescription()}" minlength="1" rows="5" placeholder="Содержание задания" th:id="'description-' + count.count" class="form-control" th:name="'description-' + count.count"></textarea>
+            <span class="input-group-btn"><button onclick="removeNewItem(this)" type="button" class="btn btn-warning">Удалить задание</button></span></div><br>
+
+
+          <div th:each="link, videoCount : ${exercise.getVideoLinks()}">
+            <br><div class="form-group">
+            <div class="input-group"><input th:value="${link.getLink()}" type="text" th:id="'video-link-' + videoCount.count" class="form-control" th:name="'link-' + count.count" placeholder="ссылка на видео на youtube">
+              <span class="input-group-btn"><button onclick="removeNewItem(this)" type="button" class="btn btn-danger">Удалить видео</button></span></div>
+            </div>
+          </div>
+
+          <div><button type="button" class="btn btn-outline-dark" th:id="count.count" onclick="addVideoLink(this, this.id)">Добавить ссылку на видео</button></div><br><br><br></div>
+
+      </div>
+
+      <button style="width: 100%" th:id="${wodCont}" onclick="addExercise(this.id)" class="btn btn-success btn-lg btn-block" type="button">Добавить задание</button>
       <br>
       <br>
       <input class="form-control" th:value="*{hashTag}" type="text" id="hashTag" name="hashTag" placeholder="хэштег">
@@ -92,7 +110,10 @@
   let n = 0; //счётчик заданий
 
   //добавление задания
-  document.getElementById('add-exercise').onclick = function() {
+  function addExercise(countEx) {
+    if(countEx > 0){
+      n = countEx;
+    }
     n++;
     let theDiv = document.createElement('div');
     theDiv.innerHTML = '<div class="form-group exercise">'+

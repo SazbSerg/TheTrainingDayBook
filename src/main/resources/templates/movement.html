@@ -22,22 +22,27 @@
     <table class="table table-bordered table-hover table-striped linkedRow">
         <thead>
             <tr>
-                <th>Название движения</th>
-                <th>1ПМ</th>
-                <th>Коэффициент прибавки</th>
-                <th style="min-width: 80px">&nbsp;...</th>
+                <th style="width: 25%">Название движения</th>
+                <th style="width: 25%; text-align: center">1ПМ</th>
+                <!--<th>Коэффициент прибавки</th>-->
+                <th style="width: 25%; text-align: center">&nbsp;Редактировать движение</th>
+                <th style="width: 25%; text-align: center">&nbsp;Удалить движение</th>
             </tr>
         </thead>
         <tbody>
         <tr th:each="movement : ${userAttr.getMovements()}">
             <td th:text="${movement.getMovementName()}" onclick="document.location = '/movement-cycle/' + this.id" th:id="${movement.getId()}"></td>
-            <td th:text="${movement.getOneRepMaximum()}" onclick="document.location = '/movement-cycle/' + this.id" th:id="${movement.getId()}"></td>
-            <td th:text="${movement.getIncrementCoefficient2()}" onclick="document.location = '/movement-cycle/' + this.id" th:id="${movement.getId()}"></td>
-            <td>
+            <td th:text="${movement.getOneRepMaximum()}" onclick="document.location = '/movement-cycle/' + this.id" th:id="${movement.getId()}" style="text-align: center"></td>
+           <!-- <td th:text="${movement.getIncrementCoefficient2()}" onclick="document.location = '/movement-cycle/' + this.id" th:id="${movement.getId()}"></td> -->
+            <td style="text-align: center">
                 <div class="btn-group pull-right">
                     <a class="btn btn-default btn-sm" th:href="@{'/movement-edit/'+${movement.getId()}}" title="Редактировать">
                         <i class="fa fa-pencil"></i>
                     </a>
+                </div>
+            </td>
+            <td style="text-align: center">
+                <div class="btn-group pull-right">
                     <a class="btn btn-default btn-sm" onclick="submitRemovingMovement(this.id)" th:id="${movement.getId()}"  title="Удалить">
                         <i class="fa fa-trash"></i>
                     </a>
